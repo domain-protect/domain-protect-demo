@@ -21,32 +21,6 @@
                 "logs:DescribeLogStreams"
             ],
             "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:PutObject"
-            ],
-            "Resource": "arn:aws:s3:::${bucket_name}/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetEncryptionConfiguration"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "kms:Decrypt"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "kms:GenerateDataKey",
-            "Resource": "*"
         }
     ]
 }

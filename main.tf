@@ -9,6 +9,16 @@ module "vpc" {
   flow_log_retention_in_days = var.flow_log_retention_in_days
 }
 
+module "ec2" {
+  source              = "./terraform-modules/ec2"
+  project             = var.project
+  amazon_linux_ami    = data.aws_ami.amazon_linux.id
+  instance_type_linux = var.instance_type_linux
+  linux_subnet_id     = module.vpc.az1_dmz_subnet_id
+  security_group_id   = module.vpc.security_group_id
+  volume_type         = var.volume_type
+}
+
 module "s3-website" {
   source      = "./terraform-modules/s3-website"
   region      = var.region
