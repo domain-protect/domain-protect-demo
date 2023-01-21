@@ -12,7 +12,7 @@ resource "aws_route53_record" "website" {
 }
 
 resource "aws_route53_zone" "subdomain" {
-  name    = "${var.subdomain_prefix}.${var.base_domain}"
+  name = "${var.subdomain_prefix}.${var.base_domain}"
 }
 
 resource "aws_route53_record" "subdomain" {

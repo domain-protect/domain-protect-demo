@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# get admin privileges
+sudo su
+
+# check Internet connectivity
+until ping -q -c 1 -W 1 8.8.8.8 >/dev/null; do
+  echo "checking for Internet connectivity"
+  sleep 1
+done
+echo "Internet connectivity established"
+
+# install httpd (Linux 2 version)
+yum update -y
+yum install -y httpd.x86_64
+systemctl start httpd.service
+systemctl enable httpd.service
+echo '<font face="verdana,arial,sans-serif"><h1>Ditch the Bastions!</h1></font>' > /var/www/html/index.html
+
+# install socat for port forwarding
+sudo yum install -y socat

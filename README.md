@@ -8,7 +8,7 @@ Creates infrastructure to be used in demonstrations of Domain Protect
 * the base_domain must correspond to a Route53 hosted zone in your AWS account
 ```
 terraform init
-terraform workspace new dev
+terraform workspace new demo
 terraform plan
 terraform apply
 ```
