@@ -26,6 +26,13 @@ module "s3-website" {
   tags        = var.tags
 }
 
+module "s3-website-cloudflare" {
+  source      = "./terraform-modules/s3-website"
+  region      = var.region
+  bucket_name = local.cloudflare_domain_name
+  tags        = var.tags
+}
+
 module "route53" {
   source           = "./terraform-modules/route53"
   base_domain      = var.base_domain

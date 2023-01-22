@@ -12,3 +12,8 @@ terraform workspace new demo
 terraform plan
 terraform apply
 ```
+
+## image acknowledgements
+Corcovado: [The Luxury Travel Expert](https://theluxurytravelexpert.com/2022/05/23/top-10-most-beautiful-national-parks-world)
+Fiordland: [The Luxury Travel Expert](https://theluxurytravelexpert.com/2022/05/23/top-10-most-beautiful-national-parks-world)
+Yosemite: [US National Parks](https://www.nps.gov/yose/index.htm)

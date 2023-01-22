@@ -35,6 +35,15 @@ variable "a_record_prefix" {
   default     = "fiordland"
 }
 
+variable "cloudflare_base_domain" {
+  description = "Cloudflare base domain, e.g. example.net"
+}
+
+variable "cloudflare_prefix" {
+  description = "Cloudflare prefix, e.g. test"
+  default     = "corcovado"
+}
+
 variable "amazon_linux_major_version" {
   description = "major version of Amazon Linux"
   default     = "5.10-hvm-2.0"

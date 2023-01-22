@@ -1,1 +1,2 @@
-base_domain = "example.com"
+base_domain            = "example.com"
+cloudflare_base_domain = "example.net"
