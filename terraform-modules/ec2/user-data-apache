@@ -15,4 +15,27 @@ yum update -y
 yum install -y httpd.x86_64
 systemctl start httpd.service
 systemctl enable httpd.service
-echo '<font face="verdana,arial,sans-serif"><h1>Fiordland</h1></font>' > /var/www/html/index.html
+cat <<EOT >> /var/www/html/index.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="Fiordland National Park" content="width=device-width, initial-scale=1", class="center">
+<style>
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+p {text-align: center;}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+</head>
+<meta property="og:title" content="Fiordland National Park" />
+<body style="background-color:black;">
+
+<img src="https://raw.githubusercontent.com/domain-protect/domain-protect-demo/main/terraform-modules/ec2/fiordland/fiordland.png" alt="Fiordland National Park" style="width:90%;">
+<body>
+</html>
+EOT
