@@ -43,6 +43,9 @@ module "route53" {
   a_record_prefix  = var.a_record_prefix
   ec2_public_ip    = module.ec2.ec2_public_ip
   tags             = var.tags
+
+  # prevent subdomain takeover during deployment - ensure route53 DNS record created last
+  depends_on = [module.s3-website.s3_bucket_arn]
 }
 
 module "cloudflare" {
@@ -50,4 +53,7 @@ module "cloudflare" {
   base_domain    = var.cloudflare_base_domain
   domain_prefix  = var.cloudflare_prefix
   s3_domain_name = local.cloudflare_regional_domain_name
+
+  # prevent subdomain takeover during deployment - ensure Cloudflare DNS record created last
+  depends_on = [module.s3-website-cloudflare.s3_bucket_arn]
 }
