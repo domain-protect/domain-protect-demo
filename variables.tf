@@ -30,6 +30,11 @@ variable "subdomain_prefix" {
   default     = "serengeti"
 }
 
+variable "a_record_prefix" {
+  description = "A record prefix"
+  default     = "fiordland"
+}
+
 variable "amazon_linux_major_version" {
   description = "major version of Amazon Linux"
   default     = "5.10-hvm-2.0"
@@ -61,7 +66,6 @@ variable "flow_log_retention_in_days" {
   description = "Days to retain Flow Logs in CloudWatch"
   default     = "30"
 }
-
 
 variable "tags" {
   type        = map(string)

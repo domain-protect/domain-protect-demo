@@ -32,5 +32,7 @@ module "route53" {
   domain_prefix    = var.domain_prefix_website
   s3_domain_name   = local.bucket_regional_domain_name
   subdomain_prefix = var.subdomain_prefix
+  a_record_prefix  = var.a_record_prefix
+  ec2_public_ip    = module.ec2.ec2_public_ip
   tags             = var.tags
 }

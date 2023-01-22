@@ -11,6 +11,14 @@ resource "aws_route53_record" "website" {
   records = [var.s3_domain_name]
 }
 
+resource "aws_route53_record" "a" {
+  zone_id = data.aws_route53_zone.website.zone_id
+  name    = "${var.a_record_prefix}.${var.base_domain}"
+  type    = "A"
+  ttl     = "300"
+  records = [var.ec2_public_ip]
+}
+
 resource "aws_route53_zone" "subdomain" {
   name = "${var.subdomain_prefix}.${var.base_domain}"
 }

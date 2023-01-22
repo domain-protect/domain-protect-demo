@@ -14,6 +14,14 @@ variable "subdomain_prefix" {
   description = "prefix to base domain, e.g. dev"
 }
 
+variable "a_record_prefix" {
+  description = "prefix to base domain for A record"
+}
+
+variable "ec2_public_ip" {
+  description = "Public IP address of EC2 instance"
+}
+
 variable "tags" {
   description = "Optional tags"
 }
