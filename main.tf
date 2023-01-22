@@ -27,10 +27,11 @@ module "s3-website" {
 }
 
 module "s3-website-cloudflare" {
-  source      = "./terraform-modules/s3-website"
-  region      = var.region
-  bucket_name = local.cloudflare_domain_name
-  tags        = var.tags
+  source         = "./terraform-modules/s3-website"
+  region         = var.region
+  bucket_name    = local.cloudflare_domain_name
+  content_folder = "corcovado"
+  tags           = var.tags
 }
 
 module "route53" {
@@ -42,4 +43,11 @@ module "route53" {
   a_record_prefix  = var.a_record_prefix
   ec2_public_ip    = module.ec2.ec2_public_ip
   tags             = var.tags
+}
+
+module "cloudflare" {
+  source         = "./terraform-modules/cloudflare"
+  base_domain    = var.cloudflare_base_domain
+  domain_prefix  = var.cloudflare_prefix
+  s3_domain_name = local.cloudflare_regional_domain_name
 }
