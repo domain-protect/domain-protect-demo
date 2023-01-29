@@ -76,6 +76,11 @@ variable "flow_log_retention_in_days" {
   default     = "30"
 }
 
+variable "cloudflare_demo" {
+  description = "s3 or eb (Elastic Beanstalk)"
+  default     = "eb"
+}
+
 variable "tags" {
   type        = map(string)
   description = "Optional Tags"

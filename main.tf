@@ -27,11 +27,33 @@ module "s3-website" {
 }
 
 module "s3-website-cloudflare" {
+  count          = var.cloudflare_demo == "s3" ? 1 : 0
   source         = "./terraform-modules/s3-website"
   region         = var.region
   bucket_name    = local.cloudflare_domain_name
   content_folder = "corcovado"
   tags           = var.tags
+}
+
+module "eb-content-cloudflare" {
+  count       = var.cloudflare_demo == "eb" ? 1 : 0
+  source      = "./terraform-modules/eb-content"
+  region      = var.region
+  bucket_name = local.eb_content_bucket_name
+  tags        = var.tags
+}
+
+module "elastic-beanstalk" {
+  count               = var.cloudflare_demo == "eb" ? 1 : 0
+  source              = "./terraform-modules/eb"
+  project             = var.project
+  cname_prefix        = local.eb_cname_prefix
+  content_bucket_name = module.eb-content-cloudflare[0].s3_bucket_name
+  content_object_name = module.eb-content-cloudflare[0].s3_object_name
+  security_group_id   = module.vpc.web_security_group_id
+  vpc_id              = module.vpc.vpc_id
+  public_subnet_id    = module.vpc.az1_dmz_subnet_id
+  tags                = var.tags
 }
 
 module "route53" {
@@ -48,12 +70,24 @@ module "route53" {
   depends_on = [module.s3-website.s3_bucket_arn]
 }
 
-module "cloudflare" {
-  source         = "./terraform-modules/cloudflare"
-  base_domain    = var.cloudflare_base_domain
-  domain_prefix  = var.cloudflare_prefix
-  s3_domain_name = local.cloudflare_regional_domain_name
+module "cloudflare_eb" {
+  count                = var.cloudflare_demo == "eb" ? 1 : 0
+  source               = "./terraform-modules/cloudflare"
+  base_domain          = var.cloudflare_base_domain
+  domain_prefix        = var.cloudflare_prefix
+  resource_domain_name = "${local.eb_cname_prefix}.${var.region}.elasticbeanstalk.com"
 
   # prevent subdomain takeover during deployment - ensure Cloudflare DNS record created last
-  depends_on = [module.s3-website-cloudflare.s3_bucket_arn]
+  depends_on = [module.elastic-beanstalk[0].eb_app_version_arn]
+}
+
+module "cloudflare_s3" {
+  count                = var.cloudflare_demo == "s3" ? 1 : 0
+  source               = "./terraform-modules/cloudflare"
+  base_domain          = var.cloudflare_base_domain
+  domain_prefix        = var.cloudflare_prefix
+  resource_domain_name = local.cloudflare_regional_domain_name
+
+  # prevent subdomain takeover during deployment - ensure Cloudflare DNS record created last
+  depends_on = [module.s3-website-cloudflare[0].s3_bucket_arn]
 }
