@@ -14,10 +14,10 @@ resource "aws_iam_role" "eb" {
         {
             "Action": "sts:AssumeRole",
             "Principal": {
-               "Service": "elasticbeanstalk.amazonaws.com"
+               "Service": "ec2.amazonaws.com"
             },
             "Effect": "Allow",
-            "Sid": ""
+            "Sid": "AssumeRole"
         }
     ]
 }
@@ -33,4 +33,9 @@ resource "aws_iam_policy" "eb" {
 resource "aws_iam_role_policy_attachment" "eb" {
   role       = aws_iam_role.eb.name
   policy_arn = aws_iam_policy.eb.arn
+}
+
+resource "aws_iam_role_policy_attachment" "web" {
+  role       = aws_iam_role.eb.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
