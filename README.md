@@ -5,7 +5,7 @@ Creates infrastructure to be used in demonstrations of Domain Protect
 * S3 website with route53 CNAME record
 * Hosted zone with route53 NS subdomain delegation
 * EC2 instance hosting website with public IP and route53 A record
-* S3 website with Cloudflare CNAME record
+* Elastic Beanstalk OR S3 website with Cloudflare CNAME record
 
 ## demonstration
 * demonstrate access to websites
@@ -30,6 +30,17 @@ terraform init
 terraform workspace new demo
 terraform plan
 terraform apply
+```
+* by default the Cloudflare DNS entry will point to an Elastic Beanstalk application
+* to deploy a S3 bucket instead of Elastic Beanstalk, in your `tfvars` file add:
+```
+cloudflare_demo = "s3"
+```
+
+## destroy
+* destroy immediately after the demo to avoid excessive costs
+```
+terraform destroy (yes to confirm)
 ```
 
 ## image acknowledgements

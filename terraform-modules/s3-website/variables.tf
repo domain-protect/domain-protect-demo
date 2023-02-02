@@ -14,3 +14,8 @@ variable "content_folder" {
   description = "Folder name for website content"
   default     = "yosemite"
 }
+
+variable "filenames" {
+  description = "list of file names except for image"
+  default     = ["404.html", "index.html"]
+}

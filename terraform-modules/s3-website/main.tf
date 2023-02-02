@@ -21,14 +21,13 @@ resource "aws_s3_bucket_website_configuration" "website_bucket" {
   }
 }
 
-resource "null_resource" "remove_and_upload_to_s3" {
-  provisioner "local-exec" {
-    command = "aws s3 sync ${path.module}/${var.content_folder}/ s3://${aws_s3_bucket.website_bucket.id}"
-  }
+resource "aws_s3_object" "content" {
+  for_each = toset(local.filenames)
 
-  triggers = {
-    bucket_id = aws_s3_bucket.website_bucket.id
-  }
+  bucket       = aws_s3_bucket.website_bucket.id
+  key          = each.key
+  source       = "${path.module}/${var.content_folder}/${each.key}"
+  content_type = "text/html"
 }
 
 data "aws_iam_policy_document" "s3_policy" {
