@@ -8,7 +8,7 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.51.0"
     }
-    archive = {
+    random = {
       source  = "hashicorp/random"
       version = "~> 3.1.0"
     }
