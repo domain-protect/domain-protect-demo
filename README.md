@@ -1,5 +1,7 @@
 # domain-protect-demo
-Creates infrastructure to be used in demonstrations of Domain Protect
+Creates infrastructure used in demonstrations of Domain Protect
+
+[![Global AppSec Dublin 2023](images/global-appsec-dublin.png)](https://youtu.be/fLrRLmKZTvE)
 
 ## infrastructure deployed
 * S3 website with route53 CNAME record
@@ -9,7 +11,8 @@ Creates infrastructure to be used in demonstrations of Domain Protect
 
 ## demonstration
 * demonstrate access to websites
-* manually destroy S3 buckets, hosted zone and EC2 instance
+* create similar new S3 CNAME using console
+* manually destroy EC2 instance, Elastic Beanstalk Environment and hosted zone
 * [Domain Protect](https://github.com/domain-protect/domain-protect) should detect vulnerabilities and send alerts
 
 ## requirements
