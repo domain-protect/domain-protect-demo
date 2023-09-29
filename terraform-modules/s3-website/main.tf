@@ -30,6 +30,15 @@ resource "aws_s3_object" "content" {
   content_type = "text/html"
 }
 
+resource "aws_s3_bucket_public_access_block" "website_bucket" {
+  bucket = aws_s3_bucket.website_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = false
+  ignore_public_acls      = true
+  restrict_public_buckets = false
+}
+
 data "aws_iam_policy_document" "s3_policy" {
   statement {
     actions   = ["s3:GetObject"]
@@ -45,4 +54,6 @@ data "aws_iam_policy_document" "s3_policy" {
 resource "aws_s3_bucket_policy" "website" {
   bucket = aws_s3_bucket.website_bucket.id
   policy = data.aws_iam_policy_document.s3_policy.json
+
+  depends_on = [ aws_s3_bucket_public_access_block.website_bucket ]
 }
